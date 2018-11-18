@@ -1,0 +1,2 @@
+WORDLIST disease_set='disease_set.txt';
+MARKFAST(疾病集合,disease_set);

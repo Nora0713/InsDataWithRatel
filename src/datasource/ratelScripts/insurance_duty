@@ -1,0 +1,18 @@
+DECLARE punc,sentence;
+"[。:：]"->punc;
+punc #{->MARK(sentence, 2, 3)} punc*;
+#{->MARK(sentence, 1, 2)} punc;
+
+DECLARE 保险责任的选择;
+DECLARE fixpoint,suffix,保险责任;
+"保险责任"->fixpoint;
+"保[\\s]*险[\\s]*金(?![额|申请|给付])"->suffix;
+"保[\\s]*险[\\s]*金[\\s]"->保险责任;
+
+DECLARE reverse_key,parts,reverse_key_tail;
+"豁免|，|年|期间|申请|收到|变更|给付|领取|基本"->reverse_key;
+sentence{CONTAINS(suffix)->parts};
+
+BLOCK(extract_insurance_duty)parts{}{
+    #{REGEXP("^.{2,15}"), -CONTAINS(reverse_key)} suffix # {->MARK(保险责任的选择,1,2)};
+}

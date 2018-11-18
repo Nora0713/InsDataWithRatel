@@ -1,0 +1,8 @@
+DECLARE panda;
+DECLARE agerange;
+"投保范围"-> agerange;
+DECLARE activity;"睡觉|玩耍"->activity;
+DECLARE panda_activity;
+(panda  # activity){-> panda_activity};
+//dsa
+
