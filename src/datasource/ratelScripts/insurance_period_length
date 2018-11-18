@@ -3,19 +3,21 @@ DECLARE punc,sentence;
 punc #{->MARK(sentence, 2, 3)} punc*;
 #{->MARK(sentence, 1, 2)} punc;
 
-DECLARE insurance_period_length;
+DECLARE 保险期间长度;
 DECLARE mountpoint,prefix,midfix,suffix,A;
-"保险期间"->mountpoint;//[\\s]+
-"，|。|为"->prefix;
+"保险期间"->mountpoint;
+"，|。|为|:|："->prefix;
 "险"->midfix;
-"(岁|止|[\\d]+年|时)((.{0,15})?(岁|止|[\\d]+年|时){1}?){0,4}"->suffix;
+"(岁|止|[\\d]+[\\s]*年|时)((.{0,5})?(岁|止|[\\d]+[\\s]*年|时)+?){0,4}"->suffix;
 (prefix midfix suffix){->MARK(A)};
 
 DECLARE pre_part, parts, part;
 sentence{CONTAINS(mountpoint)->part};
 part {-> MARK(part, 1, 10)};
-DECLARE reverse_key;
-"投保年龄"->reverse_key;
+DECLARE reverse_key,res;
+"投保年龄|保险金"->reverse_key;
+"约定|终身"->res;
 BLOCK(extract_insurance_period_length)part{}{
-    #{-CONTAINS(reverse_key)} prefix # suffix {->MARK(insurance_period_length,3,4)};
+    #{-CONTAINS(reverse_key)} prefix #{-CONTAINS(reverse_key)} suffix {->MARK(保险期间长度,3,4)};
+    # res #{->MARK(保险期间长度,2,2)};
 }

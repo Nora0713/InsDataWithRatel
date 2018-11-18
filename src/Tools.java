@@ -11,7 +11,7 @@ public class Tools {
         List<String> filepaths = new ArrayList<String>();
         File dir = new File(dirpath);
         for (File f : dir.listFiles()) {
-            if (f.getName().endsWith("json"))
+            if (f.getName().endsWith("1.json") || f.getName().endsWith("4.json") || f.getName().endsWith("7.json"))
                 filepaths.add(f.getName());
         }
         return filepaths;
@@ -19,7 +19,7 @@ public class Tools {
 
     public static String readText(String filepath) throws IOException {
         File file = new File(datapath, filepath);
-        System.out.println(file.getAbsolutePath());
+        System.out.println("readText: "+file.getAbsolutePath());
         if (file.exists()) {
             FileInputStream is = null;
             StringBuilder stringBuilder = null;
@@ -138,6 +138,37 @@ public class Tools {
         }
     }
 
+    public static List<String> readDict(String filepath) throws IOException {
+        File file = new File(datapath, filepath);
+        System.out.println(file.getAbsolutePath());
+        List<String> dict = new ArrayList<>();
+        if (file.exists()) {
+            FileInputStream is = null;
+            StringBuilder stringBuilder = null;
+            try {
+                if (file.length() != 0) {
+                    is = new FileInputStream(file);
+                    InputStreamReader streamReader = new InputStreamReader(is);
+                    BufferedReader reader = new BufferedReader(streamReader);
+                    String line;
+                    stringBuilder = new StringBuilder();
+                    while ((line = reader.readLine()) != null) {
+                        dict.add(line);
+                    }
+                    reader.close();
+                    is.close();
+                } else {
+                    System.out.print("file.length() == 0");
+                }
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return dict;
+        } else
+            return dict;
+    }
+
         public static void test() throws IOException {
         List<LabelingRes> labelingResList = readJson("labeling_output/任国源task1.json");
         for (LabelingRes labelingRes : labelingResList) {
@@ -148,7 +179,11 @@ public class Tools {
     }
 
     public static void main(String[] args) {
-        System.out.println(readDir(datapath+"/labeling_output"));
-
+        try {
+            List<String> list = readDict("disease_set.txt");
+            System.out.println(list.toString());
+        }catch (IOException e){
+            e.printStackTrace();
+        }
     }
 }

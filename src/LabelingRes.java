@@ -3,16 +3,16 @@ import scala.collection.LinearSeq;
 import java.util.List;
 
 public class LabelingRes {
-    private String data_id;
+    private int data_id;
     private String data_set_name;
     private String content;
     private List<Span> spans;
 
-    public String getData_id() {
+    public int getData_id() {
         return data_id;
     }
 
-    public LabelingRes setData_id(String data_id) {
+    public LabelingRes setData_id(int data_id) {
         this.data_id = data_id;
         return this;
     }

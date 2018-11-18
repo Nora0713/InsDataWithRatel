@@ -1,2 +1,3 @@
-WORDLIST disease_set='disease_set.txt';
+DECLARE 疾病集合;
+WORDLIST disease_set='disease_set';
 MARKFAST(疾病集合,disease_set);

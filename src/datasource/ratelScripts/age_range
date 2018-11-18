@@ -1,4 +1,4 @@
-DECLARE age_range;
+DECLARE 被保险人年龄要求;
 DECLARE fixpoint;
 DECLARE prefix,midfix,suffix,A;
 DECLARE punc,sentence;
@@ -17,6 +17,5 @@ pre_part parts* {-> MARK(part, 1, 10)};
 "\\d+"->A;
 "岁|周岁|周|日|天"->suffix;
 BLOCK(extract_age_range)part{}{
-    prefix (# A suffix)+{->MARK(age_range,1,3)};
+    prefix (# A suffix)+{->MARK(被保险人年龄要求,1,3)};
 }
-//只在投保范围文本片段(part)中提取年龄

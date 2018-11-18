@@ -3,7 +3,7 @@ DECLARE punc,sentence;
 punc #{->MARK(sentence, 2, 3)} punc*;
 #{->MARK(sentence, 1, 2)} punc;
 
-DECLARE disclaimer_content;
+DECLARE 保险责任免除;
 DECLARE mountpoint,prefix,midfix,suffix,A,pre;
 "(保险责任的免.{0,40}[\\s]*除|责任免除)"->mountpoint;
 "[（]*+[\\d]+[）]*[\\.]*"->prefix;
@@ -13,8 +13,8 @@ DECLARE mountpoint,prefix,midfix,suffix,A,pre;
 DECLARE part;
 sentence{CONTAINS(mountpoint)->part};
 BLOCK(extract_disclaimer_content)part{}{
-    pre # A{->MARK(disclaimer_content,3,3)};
+    pre # A{->MARK(保险责任免除,3,3)};
 }
 BLOCK(extract_disclaimer_content)part{}{
-    prefix #{-CONTAINS(mountpoint)} suffix {->MARK(disclaimer_content,2,4)};
+    prefix #{-CONTAINS(mountpoint)} suffix {->MARK(保险责任免除,2,4)};
 }

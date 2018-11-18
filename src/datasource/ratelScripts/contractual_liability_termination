@@ -1,0 +1,17 @@
+DECLARE terminate,respon_area,prefix,midfix,suffix;
+DECLARE sep,sentence;
+"。"->sep;
+sep #{->MARK(sentence)} sep?;
+DECLARE pre_,next_;
+DECLARE part_new,part;
+DECLARE 赔付后合同责任终止;
+"\\d[\\s]*保险责任|.{0,5}条[\\s]*保险责任"->pre_;
+"保险责任的免.{0,40}[\\s]*除|责任免除"->next_;
+"给付"->midfix;
+"(本+.{0,4}[责任|合同].{0,2}终[\\s]*止)|([责任|合同]+.{0,2}终止)"->suffix;
+pre_ #{->MARK(part)} next_;
+part{CONTAINS(midfix)->part_new};
+BLOCK(extract_contractual_liability_termination)part_new{}
+{
+	suffix{->MARK(赔付后合同责任终止)};
+}
