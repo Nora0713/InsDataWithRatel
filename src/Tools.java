@@ -180,7 +180,7 @@ public class Tools {
 
     public static void main(String[] args) {
         try {
-            List<String> list = readDict("disease_set.txt");
+            List<String> list = readDict("disease_set_old.txt");
             System.out.println(list.toString());
         }catch (IOException e){
             e.printStackTrace();
